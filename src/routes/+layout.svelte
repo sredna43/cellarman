@@ -6,8 +6,11 @@
 </script>
 
 <body>
-	<main class="container">
+	<header class="container">
 		<Header />
+	</header>
+
+	<main class="container">
 		<slot />
 	</main>
 </body>

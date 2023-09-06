@@ -29,6 +29,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@picocss/pico": "^2.0.0-alpha1"
+		"@picocss/pico": "^2.0.0-alpha1",
+		"svelte-icons": "^2.1.0"
 	}
 }
