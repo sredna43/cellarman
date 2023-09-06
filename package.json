@@ -27,5 +27,9 @@
 		"typescript": "^5.0.0",
 		"vite": "^4.4.2"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@picocss/pico": "^2.0.0-alpha1",
+		"svelte-icons": "^2.1.0"
+	}
 }
