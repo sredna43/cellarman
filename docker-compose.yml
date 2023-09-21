@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  app:
+    image: cellarman
+    build: .
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+    networks:
+      - node-network
+    environment:
+      - MONGO_URL=mongodb://db:27017/cellarman
+      - ORIGIN=http://localhost:3000
+  db:
+    image: mongo:6-jammy
+    ports:
+      - '27017:27017'
+    volumes:
+      - dbdata:/data/db
+    networks:
+      - node-network
+
+volumes:
+  dbdata:
+
+networks:
+  node-network:
+    driver: bridge

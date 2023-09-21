@@ -3,14 +3,30 @@
 	import '../app.css';
 	import '$lib/components/Header.svelte';
 	import Header from '$lib/components/Header.svelte';
+	import { page } from '$app/stores';
+	import type { Pages } from '$lib/types';
+
+	const pageTitles: Pages = {
+		'/': 'Inventory'
+	};
 </script>
 
 <body>
 	<header class="container">
-		<Header />
+		<Header pageTitle={pageTitles[$page.url.pathname] || 'Whoops'} />
 	</header>
 
-	<main class="container">
+	<main>
 		<slot />
 	</main>
 </body>
+
+<style>
+	header {
+		padding-bottom: 0%;
+	}
+
+	main {
+		padding: 3rem;
+	}
+</style>
