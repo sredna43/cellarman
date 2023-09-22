@@ -24,7 +24,7 @@
 <style>
 	header {
 		padding-bottom: 0%;
-		padding: 3rem;
+		padding-left: 3rem;
 	}
 
 	main {
