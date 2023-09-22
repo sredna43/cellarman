@@ -12,7 +12,7 @@ export const actions = {
 		});
 		try {
 			await wines.updateOne(
-				{ _id: saveObject._id || new ObjectId() },
+				{ _id: new ObjectId(saveObject._id) || new ObjectId() },
 				{ $set: saveObject },
 				{ upsert: true }
 			);
