@@ -28,8 +28,14 @@
 			{#each rows as row}
 				<tr>
 					<td
-						><button class="edit-button secondary" on:click={() => edit(row)}
-							><div class="edit"><MdEdit /></div></button
+						><button
+							class="edit-button secondary"
+							on:click={() => edit(row)}
+							data-tooltip="Edit row"
+							data-placement="right"
+							><div class="edit">
+								<MdEdit />
+							</div></button
 						></td
 					>
 					<td>{row.name}</td>
@@ -54,11 +60,12 @@
 	th {
 		top: 0;
 		position: sticky;
+		z-index: 1;
 	}
 
 	.edit-button {
-		border-radius: 50%;
 		padding: 0.25rem;
+		z-index: 0;
 	}
 
 	.edit {
