@@ -32,7 +32,7 @@
 							><div class="edit"><MdEdit /></div></button
 						></td
 					>
-					<th scope="row">{row.name}</th>
+					<td>{row.name}</td>
 					<td>{row.points}</td>
 					<td>{row.maker}</td>
 					<td>{row.appellation}</td>
@@ -50,6 +50,12 @@
 </div>
 
 <style>
+	thead,
+	th {
+		top: 0;
+		position: sticky;
+	}
+
 	.edit-button {
 		border-radius: 50%;
 		padding: 0.25rem;
@@ -62,7 +68,8 @@
 	}
 
 	.table-container {
-		overflow-x: scroll;
+		overflow: scroll;
+		max-height: 73vh;
 	}
 
 	.col-l {

@@ -29,8 +29,6 @@
 	}
 
 	main {
-		padding-left: 2rem;
-		padding-right: 2rem;
 		padding-top: 0%;
 	}
 </style>
