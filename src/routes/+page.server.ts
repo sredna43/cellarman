@@ -10,12 +10,10 @@ export const actions = {
 		data.forEach((val, key) => {
 			saveObject[key.toString()] = val.toString();
 		});
+		const id = new ObjectId(saveObject._id) || new ObjectId();
+		saveObject._id && delete saveObject._id;
 		try {
-			await wines.updateOne(
-				{ _id: new ObjectId(saveObject._id) || new ObjectId() },
-				{ $set: saveObject },
-				{ upsert: true }
-			);
+			await wines.updateOne({ _id: id }, { $set: saveObject }, { upsert: true });
 			console.log('Saved record', saveObject);
 		} catch (e) {
 			console.error(e);
