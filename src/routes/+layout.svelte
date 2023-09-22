@@ -12,7 +12,7 @@
 </script>
 
 <body>
-	<header class="container">
+	<header>
 		<Header pageTitle={pageTitles[$page.url.pathname] || 'Whoops'} />
 	</header>
 
@@ -24,6 +24,7 @@
 <style>
 	header {
 		padding-bottom: 0%;
+		padding: 3rem;
 	}
 
 	main {
