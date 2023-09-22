@@ -69,7 +69,7 @@
 </script>
 
 <svelte:head>
-	<title>My Inventory</title>
+	<title>CellarMan - Inventory</title>
 </svelte:head>
 
 <CellarTable rows={data.wines} edit={editRow} />
