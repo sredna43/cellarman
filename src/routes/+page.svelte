@@ -286,8 +286,8 @@
 		position: fixed;
 		right: 0;
 		bottom: 0;
-		margin-right: 3%;
-		margin-bottom: 3%;
+		margin-right: 1rem;
+		margin-bottom: 1rem;
 	}
 
 	.points {

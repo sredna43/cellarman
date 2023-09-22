@@ -11,17 +11,17 @@
 		<thead>
 			<tr>
 				<th scope="col">Edit</th>
-				<th scope="col" class="medium-cell">Name</th>
+				<th scope="col" class="col-l">Name</th>
 				<th scope="col">Points</th>
-				<th scope="col" class="medium-cell">Wine Maker</th>
-				<th scope="col" class="medium-cell">Appellation</th>
+				<th scope="col">Wine Maker</th>
+				<th scope="col">Appellation</th>
 				<th scope="col">Vintage</th>
 				<th scope="col">Type</th>
-				<th scope="col" class="wide-cell">Grape Varietal(s)</th>
+				<th scope="col" class="col-l">Grape Varietal(s)</th>
 				<th scope="col">Purchase Price</th>
-				<th scope="col" class="medium-cell">Purchase Date</th>
+				<th scope="col" class="col-l">Purchase Date</th>
 				<th scope="col"># of Bottles</th>
-				<th scope="col" class="wide-cell">Notes</th>
+				<th scope="col" class="col-xl">Notes</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -65,11 +65,11 @@
 		overflow-x: scroll;
 	}
 
-	.wide-cell {
-		min-width: 370px;
+	.col-l {
+		min-width: 200px;
 	}
 
-	.medium-cell {
-		min-width: 170px;
+	.col-xl {
+		min-width: 350px;
 	}
 </style>

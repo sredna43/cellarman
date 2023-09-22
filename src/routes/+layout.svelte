@@ -25,9 +25,12 @@
 	header {
 		padding-bottom: 0%;
 		padding-left: 3rem;
+		padding-right: 3rem;
 	}
 
 	main {
-		padding: 3rem;
+		padding-left: 2rem;
+		padding-right: 2rem;
+		padding-top: 0%;
 	}
 </style>
