@@ -68,10 +68,6 @@
 	};
 </script>
 
-<svelte:head>
-	<title>CellarMan - Inventory</title>
-</svelte:head>
-
 <CellarTable rows={data.wines} edit={editRow} />
 
 <dialog open={inputFormOpen}>
