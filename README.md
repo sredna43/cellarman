@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="static/favicon.png" />
+  <img src="static/logo.png" />
 </p>
 
 # CellarMan
