@@ -10,7 +10,6 @@ services:
     networks:
       - node-network
     environment:
-      - MONGO_URL=mongodb://db:27017/cellarman
       - ORIGIN=http://localhost:3000
   db:
     image: mongo:6-jammy
