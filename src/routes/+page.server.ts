@@ -32,7 +32,7 @@ export const actions = {
 
 export const load: PageServerLoad = async () => {
 	const query = {};
-	const options = { sort: { points: -1 } };
+	const options = { sort: { bottles: -1 } };
 	const data = (await wines.find(query, options).toArray()).map((item) =>
 		JSON.parse(
 			JSON.stringify(item, (key, value) => (key === '_id' ? value.toString(value) : value))

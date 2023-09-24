@@ -20,7 +20,7 @@
 				<th scope="col" class="col-l">Grape Varietal(s)</th>
 				<th scope="col">Purchase Price</th>
 				<th scope="col" class="col-l">Purchase Date</th>
-				<th scope="col"># of Bottles</th>
+				<th scope="col">Bottles Left</th>
 				<th scope="col" class="col-xl">Notes</th>
 			</tr>
 		</thead>
