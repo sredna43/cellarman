@@ -11,14 +11,15 @@
 	let searchBy = 'name';
 
 	const updateSearchFor = () => {
-		searchedRows = searchVal
-			? _.filter(rows, (row: Wine) =>
-					row[searchBy as keyof typeof row]
-						?.toString()
-						.toLowerCase()
-						?.includes(searchVal.toLowerCase())
-			  )
-			: _.cloneDeep(rows);
+		searchedRows =
+			searchVal !== ''
+				? _.filter(rows, (row: Wine) =>
+						row[searchBy as keyof typeof row]
+							?.toString()
+							.toLowerCase()
+							?.includes(searchVal.toLowerCase())
+				  )
+				: _.cloneDeep(rows);
 	};
 </script>
 
