@@ -22,14 +22,32 @@
 </body>
 
 <style>
-	header {
-		padding-bottom: 0%;
-		padding-left: 3rem;
-		padding-right: 3rem;
-		padding-top: 2%;
+	/* mobile */
+	@media screen and (max-width: 900px) {
+		header {
+			padding-bottom: 1rem;
+			padding-left: 3rem;
+			padding-right: 3rem;
+			padding-top: 2%;
+			text-align: center;
+		}
+
+		main {
+			padding-top: 0%;
+		}
 	}
 
-	main {
-		padding-top: 0%;
+	/* desktop */
+	@media screen and (min-width: 900px) {
+		header {
+			padding-bottom: 0%;
+			padding-left: 3rem;
+			padding-right: 3rem;
+			padding-top: 2%;
+		}
+
+		main {
+			padding-top: 0%;
+		}
 	}
 </style>
