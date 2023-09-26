@@ -83,7 +83,7 @@
 {:else}
 	<details class="container">
 		<!-- svelte-ignore a11y-no-redundant-roles -->
-		<summary role="button" class="secondary outline">Search Options</summary>
+		<summary role="button" class="secondary outline">Search</summary>
 		<SearchBar bind:searchBy bind:searchVal bind:sortByVal {updateRows} {updateSearchBy} />
 		<div class="bottles">
 			{#if totalBottles > 1}
