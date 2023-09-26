@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Wine } from '$lib/types';
-	import { filter } from 'lodash';
+	import _ from 'lodash';
 	import MdEdit from 'svelte-icons/md/MdEdit.svelte';
 
 	export let rows: Wine[] = [];
@@ -11,9 +11,14 @@
 	let searchBy = 'name';
 
 	const updateSearchFor = () => {
-		searchedRows = filter(rows, (row: Wine) =>
-			row[searchBy as keyof typeof row]?.toString().toLowerCase()?.includes(searchVal.toLowerCase())
-		);
+		searchedRows = searchVall
+			? _.filter(rows, (row: Wine) =>
+					row[searchBy as keyof typeof row]
+						?.toString()
+						.toLowerCase()
+						?.includes(searchVal.toLowerCase())
+			  )
+			: _.cloneDeep(rows);
 	};
 </script>
 
