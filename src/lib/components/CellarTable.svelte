@@ -128,7 +128,7 @@
 				<tr>
 					<td
 						><button
-							class="outline contrast edit-button"
+							class="outline secondary edit-button"
 							on:click={() => edit(row)}
 							data-tooltip="Edit row"
 							data-placement="right"
