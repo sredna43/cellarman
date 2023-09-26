@@ -4,7 +4,7 @@
 	import '$lib/components/Header.svelte';
 	import Header from '$lib/components/Header.svelte';
 	import { page } from '$app/stores';
-	import type { Pages } from '$lib/types';
+	import type { Pages } from '$lib/typings/types';
 
 	const pageTitles: Pages = {
 		'/': 'Inventory'

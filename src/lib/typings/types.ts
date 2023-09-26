@@ -1,7 +1,7 @@
 import type { ObjectId } from 'mongodb';
 
 export interface Wine {
-	_id: ObjectId;
+	_id?: ObjectId;
 	name?: string;
 	points?: string;
 	maker?: string;

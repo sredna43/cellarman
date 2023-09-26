@@ -1,9 +1,10 @@
 <script lang="ts">
 	import CellarTable from '$lib/components/CellarTable.svelte';
-	import MdAdd from 'svelte-icons/md/MdAdd.svelte';
+	import Add from '$lib/components/icons/Add.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
+	let screenSize = 990;
 
 	let isEditingForm = false;
 	let inputFormOpen = false;
@@ -68,7 +69,9 @@
 	};
 </script>
 
-<CellarTable rows={data.wines} edit={editRow} />
+<svelte:window bind:innerWidth={screenSize} />
+
+<CellarTable rows={data.wines} edit={editRow} {screenSize} />
 
 <dialog open={inputFormOpen}>
 	<article>
@@ -244,7 +247,7 @@
 	data-tooltip="Add a bottle to your cellar"
 	data-placement="left"
 >
-	<MdAdd />
+	<Add />
 </button>
 
 <style>

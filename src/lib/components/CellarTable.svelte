@@ -1,13 +1,13 @@
 <script lang="ts">
-	import type { Wine } from '$lib/types';
+	import type { Wine } from '$lib/typings/types';
 	import _ from 'lodash';
-	import MdEdit from 'svelte-icons/md/MdEdit.svelte';
+	import Edit from './icons/Edit.svelte';
 	import SearchBar from './SearchBar.svelte';
 
 	export let rows: Wine[] = [];
 	export let edit: any;
 
-	let screenSize = 0;
+	export let screenSize = 990;
 
 	let searchVal = '';
 	let sortByVal = 'bottles-desc';
@@ -61,11 +61,29 @@
 	};
 </script>
 
-<svelte:window bind:innerWidth={screenSize} />
-
-{#if screenSize < 900}
+{#if screenSize > 900}
+	<SearchBar bind:searchBy bind:searchVal bind:sortByVal {updateRows} {updateSearchBy} />
+	<div class="bottles">
+		{#if totalBottles > 1}
+			<h4>You have {totalBottles} bottles in your collection</h4>
+		{:else if totalBottles == 1}
+			<h4>You only have one bottle left!</h4>
+		{:else}
+			<h4>Your collection is empty :(</h4>
+		{/if}
+		<label class="switch">
+			<input
+				type="checkbox"
+				role="switch"
+				on:change={toggleShowStockOnly}
+				checked={showStockOnly}
+			/> Only show bottles currently in collection
+		</label>
+	</div>
+{:else}
 	<details class="container">
-		<summary role="button" class="secondary">Search Options</summary>
+		<!-- svelte-ignore a11y-no-redundant-roles -->
+		<summary role="button" class="secondary outline">Search Options</summary>
 		<SearchBar bind:searchBy bind:searchVal bind:sortByVal {updateRows} {updateSearchBy} />
 		<div class="bottles">
 			{#if totalBottles > 1}
@@ -85,25 +103,6 @@
 			</label>
 		</div>
 	</details>
-{:else}
-	<SearchBar bind:searchBy bind:searchVal bind:sortByVal {updateRows} />
-	<div class="bottles">
-		{#if totalBottles > 1}
-			<h4>You have {totalBottles} bottles in your collection</h4>
-		{:else if totalBottles == 1}
-			<h4>You only have one bottle left!</h4>
-		{:else}
-			<h4>Your collection is empty :(</h4>
-		{/if}
-		<label class="switch">
-			<input
-				type="checkbox"
-				role="switch"
-				on:change={toggleShowStockOnly}
-				checked={showStockOnly}
-			/> Only show bottles currently in collection
-		</label>
-	</div>
 {/if}
 
 <div class="table-container">
@@ -129,12 +128,12 @@
 				<tr>
 					<td
 						><button
-							class="edit-button secondary"
+							class="outline contrast edit-button"
 							on:click={() => edit(row)}
 							data-tooltip="Edit row"
 							data-placement="right"
 							><div class="edit">
-								<MdEdit />
+								<Edit />
 							</div></button
 						></td
 					>
@@ -202,7 +201,7 @@
 	@media screen and (min-width: 900px) {
 		.bottles {
 			position: absolute;
-			top: 2rem;
+			top: 2%;
 			right: 2rem;
 		}
 	}

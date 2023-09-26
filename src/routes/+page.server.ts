@@ -1,10 +1,11 @@
 import { wines } from '$lib/server/wines.js';
-import type { Wine } from '$lib/types.js';
-import { ObjectId } from 'mongodb';
+import type { Wine } from '$lib/typings/types.js';
+import { ObjectId, type FindOptions } from 'mongodb';
 import type { PageServerLoad } from './$types.js';
 
 export const actions = {
 	add: async (event) => {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const saveObject: any = {};
 		const data = await event.request.formData();
 		data.forEach((val, key) => {
@@ -33,7 +34,7 @@ export const actions = {
 export const load: PageServerLoad = async () => {
 	const query = {};
 	const options = { sort: { bottles: -1 } };
-	const data = (await wines.find(query, options).toArray()).map((item) =>
+	const data = (await wines.find(query, options as FindOptions<Document>).toArray()).map((item) =>
 		JSON.parse(
 			JSON.stringify(item, (key, value) => (key === '_id' ? value.toString(value) : value))
 		)

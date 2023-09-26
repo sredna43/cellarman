@@ -30,7 +30,7 @@
 			<option value="vintage">Vintage (old to new)</option>
 			<option value="vintage-desc">Vintage (new to old)</option>
 			<option value="bottles">Bottles (low to high)</option>
-			<option value="bottles-desc">Bottles (high to low)</option>
+			<option value="bottles-desc" selected>Bottles (high to low)</option>
 			<option value="points">Score (low to high)</option>
 			<option value="points-desc">Score (high to low)</option>
 			<option value="price">Price (low to high)</option>
