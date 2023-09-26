@@ -44,7 +44,13 @@
 </script>
 
 <div class="bottles">
-	<h4>You have {totalBottles} bottles in your collection</h4>
+	{#if totalBottles > 1}
+		<h4>You have {totalBottles} bottles in your collection</h4>
+	{:else if totalBottles == 1}
+		<h4>You only have one bottle left!</h4>
+	{:else}
+		<h4>Your collection is empty :(</h4>
+	{/if}
 </div>
 
 <div class="search">
