@@ -1,13 +1,13 @@
 <script lang="ts">
 	import type { Wine } from '$lib/types';
-	import { cloneDeep, includes, filter } from 'lodash';
+	import { filter } from 'lodash';
 	import MdEdit from 'svelte-icons/md/MdEdit.svelte';
 
 	export let rows: Wine[] = [];
 	export let edit: any;
 
 	let searchVal = '';
-	let searchedRows: Wine[] = cloneDeep(rows);
+	let searchedRows: Wine[] = [];
 	let searchBy = 'name';
 
 	const updateSearchFor = () => {
