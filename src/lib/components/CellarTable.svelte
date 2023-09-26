@@ -11,7 +11,7 @@
 	let searchBy = 'name';
 
 	const updateSearchFor = () => {
-		searchedRows = searchVall
+		searchedRows = searchVal
 			? _.filter(rows, (row: Wine) =>
 					row[searchBy as keyof typeof row]
 						?.toString()
