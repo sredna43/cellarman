@@ -26,6 +26,7 @@
 		padding-bottom: 0%;
 		padding-left: 3rem;
 		padding-right: 3rem;
+		padding-top: 2%;
 	}
 
 	main {

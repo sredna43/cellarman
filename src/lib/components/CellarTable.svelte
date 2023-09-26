@@ -1,17 +1,46 @@
 <script lang="ts">
 	import type { Wine } from '$lib/types';
+	import { cloneDeep, includes, filter } from 'lodash';
 	import MdEdit from 'svelte-icons/md/MdEdit.svelte';
 
 	export let rows: Wine[] = [];
 	export let edit: any;
+
+	let searchVal = '';
+	let searchedRows: Wine[] = cloneDeep(rows);
+	let searchBy = 'name';
+
+	const updateSearchFor = () => {
+		searchedRows = filter(rows, (row: Wine) =>
+			row[searchBy as keyof typeof row]?.toString().toLowerCase()?.includes(searchVal.toLowerCase())
+		);
+	};
 </script>
+
+<div class="grid search">
+	<div class="search-bar">
+		<!-- <label for="search">Search For:</label> -->
+		<input name="search" type="search" bind:value={searchVal} on:input={updateSearchFor} />
+	</div>
+
+	<div class="search-by">
+		<!-- <label for="searchby">Search By:</label> -->
+		<select name="searchby" bind:value={searchBy}>
+			<option selected value="" disabled>Search by...</option>
+			<option value="name">Wine Name</option>
+			<option value="maker">Wine Maker</option>
+			<option value="appellation">Appellation</option>
+			<option value="varietal">Grape Varietal(s)</option>
+		</select>
+	</div>
+</div>
 
 <div class="table-container">
 	<table class="striped">
 		<thead>
 			<tr>
 				<th scope="col">Edit</th>
-				<th scope="col" class="col-l">Name</th>
+				<th scope="col" class="col-l">Wine Name</th>
 				<th scope="col">Points</th>
 				<th scope="col">Wine Maker</th>
 				<th scope="col">Appellation</th>
@@ -25,7 +54,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#each rows as row}
+			{#each searchedRows as row}
 				<tr>
 					<td
 						><button
@@ -85,5 +114,31 @@
 
 	.col-xl {
 		min-width: 350px;
+	}
+
+	/* mobile */
+	@media screen and (max-width: 540px) {
+		.search {
+			padding: 1rem;
+		}
+	}
+
+	/* desktop */
+	@media screen and (min-width: 540px) {
+		.search {
+			display: grid;
+			grid-template-columns: repeat(4, 1fr);
+			grid-template-rows: 1fr;
+			grid-column-gap: 20px;
+			grid-row-gap: 0px;
+			padding-left: 1%;
+			padding-right: 1%;
+		}
+		.search-bar {
+			grid-area: 1 / 1 / 2 / 4;
+		}
+		.search-by {
+			grid-area: 1 / 4 / 2 / 5;
+		}
 	}
 </style>
