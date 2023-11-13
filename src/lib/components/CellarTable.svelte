@@ -1,107 +1,131 @@
 <script lang="ts">
-	import type { Wine } from '$lib/typings/types';
+	import type { SearchFilters, Wine, WineStats } from '$lib/typings/types';
 	import _ from 'lodash';
 	import Edit from './icons/Edit.svelte';
 	import SearchBar from './SearchBar.svelte';
+	import Stats from './Stats.svelte';
+	import { onMount } from 'svelte';
 
 	export let rows: Wine[] = [];
 	export let edit: any;
 
 	export let screenSize = 990;
 
-	let searchVal = '';
-	let sortByVal = 'bottles-desc';
-	let searchBy = 'name';
-	let sortBy = 'bottles-desc';
-	let asc = 1;
-	let showStockOnly = false;
+	let loading = true;
+
+	let searchFilters: SearchFilters = {
+		searchVal: '',
+		searchBy: 'name',
+		sortByVal: 'bottles-desc',
+		sortBy: '',
+		asc: 1,
+		showStockOnly: false
+	};
 
 	let searchedRows: Wine[] = _.cloneDeep(rows);
 
-	let totalBottles = 0;
-	rows.forEach((wine) => (totalBottles += parseInt(wine.bottles || '0')));
+	let stats: WineStats = {
+		totalBottles: 0,
+		totalPrice: 0.0,
+		totalRed: 0,
+		totalWhite: 0,
+		totalRose: 0
+	};
+
+	rows.forEach((wine) => {
+		let bottles = parseInt(wine.bottles || '0');
+		if (bottles > 0) {
+			stats.totalBottles += bottles;
+			stats.totalPrice += parseFloat(wine.price || '0.0');
+			switch (wine.type?.toLocaleLowerCase()) {
+				case 'red':
+					stats.totalRed += 1;
+					break;
+				case 'white':
+					stats.totalWhite += 1;
+					break;
+				case 'rosé':
+					stats.totalRose += 1;
+					break;
+				default:
+					break;
+			}
+		}
+	});
 
 	const updateRows = () => {
 		searchedRows = _.filter(rows, (row: Wine) =>
-			row[searchBy as keyof typeof row]?.toString().toLowerCase()?.includes(searchVal.toLowerCase())
+			row[searchFilters.searchBy as keyof typeof row]
+				?.toString()
+				.toLowerCase()
+				?.includes(searchFilters.searchVal.toLowerCase())
 		);
-		if (showStockOnly) {
+		if (searchFilters.showStockOnly) {
 			searchedRows = searchedRows.filter((row) => parseInt(row.bottles || '0') > 0);
 		}
-		if (sortByVal.includes('desc')) {
-			sortBy = sortByVal.replace('-desc', '');
-			asc = -1;
+		if (searchFilters.sortByVal.includes('desc')) {
+			searchFilters.sortBy = searchFilters.sortByVal.replace('-desc', '');
+			searchFilters.asc = -1;
 		} else {
-			sortBy = sortByVal;
-			asc = 1;
+			searchFilters.sortBy = searchFilters.sortByVal;
+			searchFilters.asc = 1;
 		}
+		loading = false;
 		searchedRows.sort((a: Wine, b: Wine) => {
-			if (sortBy.includes('price')) {
-				return parseFloat(a[sortBy as keyof typeof a]?.toString() || '0') >
-					parseFloat(b[sortBy as keyof typeof b]?.toString() || '0')
-					? 1 * asc
-					: -1 * asc;
+			if (searchFilters.sortBy.includes('price')) {
+				return parseFloat(a[searchFilters.sortBy as keyof typeof a]?.toString() || '0') >
+					parseFloat(b[searchFilters.sortBy as keyof typeof b]?.toString() || '0')
+					? 1 * searchFilters.asc
+					: -1 * searchFilters.asc;
 			}
-			return (a[sortBy as keyof typeof a]?.toString().replace(/[^a-z0-9]/gi, '') || '') >
-				(b[sortBy as keyof typeof b]?.toString().replace(/[^a-z0-9]/gi, '') || '')
-				? 1 * asc
-				: -1 * asc;
+			return (a[searchFilters.sortBy as keyof typeof a]?.toString().replace(/[^a-z0-9]/gi, '') ||
+				'') >
+				(b[searchFilters.sortBy as keyof typeof b]?.toString().replace(/[^a-z0-9]/gi, '') || '')
+				? 1 * searchFilters.asc
+				: -1 * searchFilters.asc;
 		});
 	};
 
 	const updateSearchBy = () => {
-		if (searchVal) {
+		if (searchFilters.searchVal) {
 			updateRows();
 		}
 	};
 
 	const toggleShowStockOnly = () => {
-		showStockOnly = !showStockOnly;
+		searchFilters.showStockOnly = !searchFilters.showStockOnly;
 		updateRows();
 	};
+
+	let saveSearch = false;
+
+	$: if (saveSearch) {
+		window.sessionStorage.setItem('searchFilters', JSON.stringify(searchFilters));
+	}
+
+	onMount(async () => {
+		let ses = window.sessionStorage.getItem('searchFilters');
+		if (ses) {
+			searchFilters = JSON.parse(ses);
+			updateRows();
+		}
+		saveSearch = true;
+	});
 </script>
 
+{#if loading}
+	<div class="loading" />
+{/if}
+
 {#if screenSize > 900}
-	<SearchBar bind:searchBy bind:searchVal bind:sortByVal {updateRows} {updateSearchBy} />
-	<div class="bottles">
-		{#if totalBottles > 1}
-			<h4>You have {totalBottles} bottles in your collection</h4>
-		{:else if totalBottles == 1}
-			<h4>You only have one bottle left!</h4>
-		{:else}
-			<h4>Your collection is empty :(</h4>
-		{/if}
-		<label class="switch">
-			<input
-				type="checkbox"
-				role="switch"
-				on:change={toggleShowStockOnly}
-				checked={showStockOnly}
-			/> Only show bottles currently in collection
-		</label>
-	</div>
+	<SearchBar bind:searchFilters {toggleShowStockOnly} {updateRows} {updateSearchBy} />
+	<Stats bind:stats />
 {:else}
 	<details class="container">
 		<!-- svelte-ignore a11y-no-redundant-roles -->
 		<summary role="button" class="secondary outline">Search</summary>
-		<SearchBar bind:searchBy bind:searchVal bind:sortByVal {updateRows} {updateSearchBy} />
-		<div class="bottles">
-			{#if totalBottles > 1}
-				<h4>You have {totalBottles} bottles in your collection</h4>
-			{:else if totalBottles == 1}
-				<h4>You only have one bottle left!</h4>
-			{:else}
-				<h4>Your collection is empty :(</h4>
-			{/if}
-			<label class="switch">
-				<input
-					type="checkbox"
-					role="switch"
-					on:change={toggleShowStockOnly}
-					checked={showStockOnly}
-				/> Only show bottles currently in collection
-			</label>
-		</div>
+		<SearchBar bind:searchFilters {toggleShowStockOnly} {updateRows} {updateSearchBy} />
+		<Stats bind:stats />
 	</details>
 {/if}
 
@@ -184,25 +208,5 @@
 
 	.col-xl {
 		min-width: 350px;
-	}
-
-	/* mobile */
-	@media screen and (max-width: 900px) {
-		.bottles {
-			text-align: center;
-		}
-
-		.switch {
-			margin: 0 auto;
-		}
-	}
-
-	/* desktop */
-	@media screen and (min-width: 900px) {
-		.bottles {
-			position: absolute;
-			top: 2%;
-			right: 2rem;
-		}
 	}
 </style>

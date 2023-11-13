@@ -1,19 +1,20 @@
 <script lang="ts">
-	export let searchVal: string;
-	export let searchBy: string;
-	export let sortByVal: string;
+	import type { SearchFilters } from '$lib/typings/types';
+
+	export let searchFilters: SearchFilters;
 	export let updateRows: any;
 	export let updateSearchBy: any;
+	export let toggleShowStockOnly: any;
 </script>
 
 <div class="search">
 	<div class="search-bar">
 		<label for="search">Search For:</label>
-		<input name="search" type="search" bind:value={searchVal} on:input={updateRows} />
+		<input name="search" type="search" bind:value={searchFilters.searchVal} on:input={updateRows} />
 	</div>
 	<div class="search-by">
 		<label for="searchby">Search By:</label>
-		<select name="searchby" bind:value={searchBy} on:change={updateSearchBy}>
+		<select name="searchby" bind:value={searchFilters.searchBy} on:change={updateSearchBy}>
 			<option value="name">Wine Name</option>
 			<option value="maker">Wine Maker</option>
 			<option value="appellation">Appellation</option>
@@ -22,7 +23,7 @@
 	</div>
 	<div class="sort-by">
 		<label for="sort">Sort By:</label>
-		<select name="sortby" bind:value={sortByVal} on:change={updateRows}>
+		<select name="sortby" bind:value={searchFilters.sortByVal} on:change={updateRows}>
 			<option value="name">Wine Name</option>
 			<option value="maker">Wine Maker</option>
 			<option value="appellation">Appellation</option>
@@ -39,6 +40,14 @@
 			<option value="purchaseDate-desc">Purchase Date (new to old)</option>
 		</select>
 	</div>
+	<label class="switch">
+		<input
+			type="checkbox"
+			role="switch"
+			on:change={toggleShowStockOnly}
+			checked={searchFilters.showStockOnly}
+		/> Only show bottles currently in collection
+	</label>
 </div>
 
 <style>
@@ -77,6 +86,10 @@
 
 		.sort-by {
 			grid-area: 1 / 3 / 2 / 4;
+		}
+
+		.switch {
+			grid-area: 2 / 2 / 3 / 4;
 		}
 	}
 </style>
